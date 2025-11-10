@@ -1,0 +1,23 @@
+services:
+  postgres_warehouse:
+    build: .
+    container_name: nomba_postgres_warehouse
+    image: nomba/postgres-warehouse:latest
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: analytics
+      POSTGRES_PASSWORD: analytics
+      POSTGRES_DB: nomba_warehouse
+    volumes:
+      - postgres_warehouse_data:/var/lib/postgresql/data
+      - ./init_scripts:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U analytics"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  postgres_warehouse_data:

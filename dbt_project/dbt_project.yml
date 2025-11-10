@@ -1,0 +1,24 @@
+name: "nomba_pipeline"
+version: "1.0"
+config-version: 2
+
+profile: "nomba"
+
+model-paths: ["models"]
+analysis-paths: ["analysis"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets: ["target", "dbt_modules"]
+
+models:
+  nomba_pipeline:
+    staging:
+      +schema: staging
+      +materialized: view
+    marts:
+      +schema: analytics
+      +materialized: table

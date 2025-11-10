@@ -1,0 +1,15 @@
+version: 2
+
+exposures:
+  - name: nomba_data_monitoring
+    type: dashboard
+    url: https://github.com/myekini/Nomba-Data-Pipeline
+    description: >
+      Monitoring dashboard that checks data freshness, volumes,
+      and user engagement across savings plans and transactions.
+    depends_on:
+      - ref('fact_savings_transactions')
+      - ref('data_freshness')
+    owner:
+      name: Muhammad Yekini
+      email: myekini1@gmail.com

@@ -1,0 +1,55 @@
+name: dbt CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  dbt-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dbt dependencies
+        run: |
+          pip install dbt-postgres
+
+      - name: Set up environment variables
+        env:
+          PG_HOST: ${{ secrets.PG_HOST }}
+          PG_PORT: ${{ secrets.PG_PORT }}
+          PG_USER: ${{ secrets.PG_USER }}
+          PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
+          PG_DB: ${{ secrets.PG_DB }}
+          PG_SSLMODE: ${{ secrets.PG_SSLMODE }}
+        run: |
+          echo "Environment variables loaded"
+
+      - name: Install project packages
+        run: dbt deps
+
+      - name: Run dbt build (run + test)
+        env:
+          PG_HOST: ${{ secrets.PG_HOST }}
+          PG_PORT: ${{ secrets.PG_PORT }}
+          PG_USER: ${{ secrets.PG_USER }}
+          PG_PASSWORD: ${{ secrets.PG_PASSWORD }}
+          PG_DB: ${{ secrets.PG_DB }}
+          PG_SSLMODE: ${{ secrets.PG_SSLMODE }}
+        run: |
+          dbt build --profiles-dir . --target dev
+
+      - name: Upload dbt artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dbt-artifacts
+          path: target/

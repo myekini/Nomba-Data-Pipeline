@@ -1,0 +1,49 @@
+version: 2
+
+models:
+  - name: stg_users
+    columns:
+      - name: user_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: stg_savings_plans
+    columns:
+      - name: plan_id
+        data_tests:
+          - not_null
+          - unique
+
+  - name: stg_savings_transactions
+    columns:
+      - name: txn_id
+        data_tests:
+          - not_null
+          - unique
+      - name: amount
+        data_tests:
+          - not_null
+      - name: side
+        data_tests:
+          - accepted_values:
+              values: ["buy", "sell"]
+
+  - name: dim_users
+    columns:
+      - name: user_key
+        data_tests:
+          - not_null
+          - unique
+
+  - name: fact_savings_transactions
+    columns:
+      - name: txn_id
+        data_tests:
+          - not_null
+          - unique
+      - name: user_key
+        data_tests:
+          - relationships:
+              to: ref('dim_users')
+              field: user_key

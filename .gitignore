@@ -1,0 +1,76 @@
+# ---------------------------------------------------------
+# PYTHON ENVIRONMENT
+# ---------------------------------------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.log
+*.db
+*.pid
+*.csv
+*.tsv
+*.parquet
+
+# Virtual environments
+.env/
+.venv/
+env/
+venv/
+num_env/
+*.env
+
+# ---------------------------------------------------------
+# DBT BUILD ARTIFACTS
+# ---------------------------------------------------------
+target/
+dbt_packages/
+logs/
+manifest.json
+run_results.json
+profiles.yml
+profiles.yaml
+
+# ---------------------------------------------------------
+# CREDENTIALS & CONFIG FILES
+# ---------------------------------------------------------
+.env
+.env.local
+.env.production
+.env.development
+.env.test
+.env.example
+*.key
+*.pem
+*.crt
+*.json
+secrets/
+credentials/
+config/secrets.yml
+
+# ---------------------------------------------------------
+# DATA & OUTPUT FILES
+# ---------------------------------------------------------
+data/*.csv
+data/*.xlsx
+data/*.json
+*.bak
+*.tmp
+*.swp
+*.lock
+
+# ---------------------------------------------------------
+# IDE / EDITOR FILES
+# ---------------------------------------------------------
+.vscode/
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# ---------------------------------------------------------
+# DOCKER FILES (Generated Data)
+# ---------------------------------------------------------
+postgres_warehouse_data/
+docker-entrypoint-initdb.d/
